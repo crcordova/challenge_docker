@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS Marcs (
 """
 
 try:
-    connection = mysql.connector.connect(user=db_config["user"],password=db_config["password"],host=db_config["host"])
+    connection = mysql.connector.connect(user=db_config["user"],password=db_config["password"],host=db_config["host"], port=3306)
     if connection.is_connected():
         cursor = connection.cursor()
         cursor.execute(create_database)

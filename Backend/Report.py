@@ -26,6 +26,7 @@ try:
         column_names = [d[0] for d in cursor.description]
         results = cursor.fetchall()
         results = pd.DataFrame(results)
+        print(results)
 
 
 except Error as e:

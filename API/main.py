@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from Marcs import Marcs
+from Users import Users
 from pydantic import BaseModel, Field
 from typing import Optional
 from enum import Enum
@@ -13,9 +14,12 @@ class status(str, Enum):
 
 class MarcModel(BaseModel):
     id_user: int
-    # tipo: str
     tipo: status = Field(..., description="Status can only be 'in' or 'out'")
 
+class UserModel(BaseModel):
+    name: str
+    email: str
+    password: str
 
 @app.get("/")
 async def root():
@@ -39,3 +43,9 @@ async def delecte_marc(input:MarcModel):
     marcas = Marcs()
     marcas.delete_marc(input.id_user, input.tipo)
     return{'Marca':'Deleted'}
+
+app.post('/users')
+async def create_user(input: UserModel):
+    users = Users()
+    users = users.create(input.name, input.email, input.password)
+    return {'users':'add'}
