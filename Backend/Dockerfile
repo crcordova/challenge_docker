@@ -1,15 +1,14 @@
-FROM python:3.8
+FROM python:3.10-slim
 
-# Establecer el directorio de trabajo en el contenedor
 WORKDIR /app
 
-# Copiar los archivos de requisitos y el script de Python al contenedor
-COPY requirements.txt /app/
-COPY tu_script.py /app/
+COPY /requirements.txt .
 COPY .env /app/
 
-# Instalar los requisitos
+# Instalamos las dependencias
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Ejecutar el script de Python al iniciar el contenedor
-CMD ["python", "Report.py"]
+# Copiamos el resto de los archivos de la aplicación al directorio de trabajo
+COPY . .
+
+CMD ["python", "./Report.py"]

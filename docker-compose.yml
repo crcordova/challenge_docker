@@ -1,22 +1,21 @@
-version: '3'
-services:
+version: '3.8'
 
+services:
   db:
     image: mysql:latest
-    container_name: bd_mysql
-    ports:
-      - "3306:3306"
+    restart: always
+    container_name: mydb
     environment:
-      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MYSQL_DATABASE}
-      MYSQL_USER: ${MYSQL_USER}
-      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_DATABASE: Challenge
+      MYSQL_ROOT_PASSWORD: password
+    ports:
+      - '3306:3306'
+    volumes:
+      - './sql/init.sql:/docker-entrypoint-initdb.d/init.sql'
+      - bd:/database
     networks:
       - my_network
-    volumes: 
-      - bd:/database
-      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      
+
   api:
     container_name: fastapi
     depends_on:
@@ -32,6 +31,7 @@ services:
 
   backend:
     container_name: backend
+    restart: always
     depends_on:
       - db
     build:
@@ -40,6 +40,15 @@ services:
       - my_network
     volumes: 
       - reports:/app/reports
+  
+  bd_init:
+    container_name: initbd
+    depends_on:
+      - db
+    build:
+      context: ./BD 
+    networks:
+      - my_network
 
 networks:
   my_network:
