@@ -3,7 +3,9 @@ from mysql.connector import Error
 import os
 from dotenv import load_dotenv
 import pandas as pd
+import time
 
+time.sleep(20)
 load_dotenv()
 db_config = {
     "host": os.getenv('host','localhost'),

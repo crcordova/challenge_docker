@@ -2,7 +2,9 @@ import mysql.connector
 from mysql.connector import Error
 import os
 from dotenv import load_dotenv
+import time
 
+time.sleep(20)
 load_dotenv()
 # Configuración de la conexión a la base de datos
 db_config = {
